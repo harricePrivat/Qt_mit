@@ -4,8 +4,10 @@
 #include <vector>
 #include <string>
 #include "StudentInfo.h"
+#include <string.h>
 using namespace std;
 
+    int StudentInfo::index=1;
         //fonction setters
     void StudentInfo::set_index(int index){
         this->index=index;
@@ -83,7 +85,7 @@ using namespace std;
         vector<StudentInfo> StudentInfo::get_info()
         {
             int index = 0;
-            ifstream file{"/home/brice/GestionEleves/inscription_L1.csv"};
+            ifstream file{"/home/brice/dhcpMIT/inscription_L1.csv"};
             string numero,nom ,mac, mac_eth, serial, marque, etat;
             string test; 
             istringstream flux(test);
@@ -132,6 +134,8 @@ using namespace std;
             }
             return this->student;
         }
+
+
         //methode pour la recherche
         vector<int> StudentInfo::search(string recherche)
         {
@@ -144,5 +148,37 @@ using namespace std;
                 }
             }
             return this->index_search;
+        }
+
+        int StudentInfo::nbrLineInscriptionL1(){
+            int i=0;
+            string line;
+            std::ifstream file("/home/brice/dhcpMIT/inscription_L1.csv");
+                if(file.is_open()){
+                    while(std::getline(file,line))
+                        i++;
+                }
+                file.close();
+                return i;
+        }
+
+        void StudentInfo::supprimerStudent(int id){
+            ifstream old("/home/brice/dhcpMIT/inscription_L1.csv");
+            ofstream nouveau("/home/brice/dhcpMIT/tmpL1.csv");
+            if(old.is_open() && nouveau.is_open()){
+                string line;
+                int position;
+                while(std::getline(old,line)){
+                  position=line.find(',');
+                       string token=line.substr(0,position);
+                       if(id!=stoi(token)){
+                           nouveau << line << endl;
+                       }
+                }
+            }
+            std::remove("/home/brice/dhcpMIT/inscription_L1.csv");
+            std::rename("/home/brice/dhcpMIT/tmpL1.csv","/home/brice/dhcpMIT/inscription_L1.csv");
+            old.close();
+            nouveau.close();
         }
 

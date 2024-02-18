@@ -23,7 +23,8 @@ class StudentInfo
         string total;
 
     public :
-    int index;
+
+    static int index;
     void set_index(int index);
     void set_numero(string numero);
     void set_nom(string nom);
@@ -44,6 +45,8 @@ class StudentInfo
     string get_total();
     vector<StudentInfo> get_info();
     vector<int> search(string recherche);
+   int nbrLineInscriptionL1();
+   void supprimerStudent(int id);
 };
 
 #endif //DHCP

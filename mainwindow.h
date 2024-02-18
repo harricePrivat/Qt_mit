@@ -35,6 +35,9 @@ private slots:
 
     void on_searchButton_clicked();
 
+    void on_pushButton_clicked();
+
+    void on_deleteStudentButton_clicked();
 private:
     Ui::MainWindow *ui;
 };
